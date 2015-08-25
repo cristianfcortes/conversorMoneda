@@ -4,7 +4,14 @@ var vDetalleTooltip = Backbone.View.extend({
     this.mPointAnt = this.collection.at(this.collection.indexOf(this.model) - 1)
   },
   variacion:function(){
-    return this.model.get('value')-this.mPointAnt.get('value')
+    var str = '';
+    var value = this.model.get('value')-this.mPointAnt.get('value')
+    if(value > 0 )
+      str = '<i class="fi-arrow-up" style="color:green"></i> '+Math.abs(value)
+    else
+      str = '<i class="fi-arrow-down" style="color:red"></i> '+Math.abs(value)
+
+    return str;
   },
   template:function(){
     var html = ['<table class="columns"><tbody>',
