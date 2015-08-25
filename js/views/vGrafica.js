@@ -5,7 +5,7 @@ var vGrafica = Backbone.View.extend({
   clickPoint: function(evt){
 
         var point = this.myLineChart.getPointsAtEvent(evt)[0];
-        var mPoint = this.collection.where({value:point.value})[0]
+        var mPoint = this.collection.where({fecha:point.label})[0]
 
         var tooltipEl = $('#chartjs-tooltip');
         var tooltip = new vDetalleTooltip({el:'#chartjs-tooltip', collection: this.collection, model:mPoint })
@@ -15,7 +15,9 @@ var vGrafica = Backbone.View.extend({
     this.collection = new cMoneda()
     var self = this
     Chart.defaults.global.responsive = true;
+
     this.options = {
+      tooltipEvents: ["touchstart", "touchmove"],
       customTooltips: function(tooltip){
         var tooltipEl = $('#chartjs-tooltip');
 
@@ -55,7 +57,8 @@ var vGrafica = Backbone.View.extend({
   },
   cambioMoneda:function(base,otro){
     var self = this
-    this.collection = new cMoneda()
+    //this.collection = new cMoneda()
+    this.collection.reset()
     this.collection.traeRango(base,otro).done(function(data){
       var resp = self.collection.getDataGraf()
       // Eliminamos el primer dato
@@ -77,7 +80,7 @@ var vGrafica = Backbone.View.extend({
     if(this.myLineChart){
       this.myLineChart.removeData()
     }
-    
+
     var ctx = this.$el.get(0).getContext("2d");
     this.myLineChart = new Chart(ctx).Line(this.data, this.options);
     return this

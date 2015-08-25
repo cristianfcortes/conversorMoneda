@@ -14,7 +14,8 @@ Base.Router = Backbone.Router.extend({
     index: function(){
         var graf = new vGrafica({el: '#myChart'})
         $('#monedaBase, #monedaOtro').on('change', function(){
-          graf.cambioMoneda($('#monedaBase').val(),$('#monedaOtro').val())
+            $('#chartjs-tooltip').html('');
+            graf.cambioMoneda($('#monedaBase').val(),$('#monedaOtro').val())
         })
 
     }, 
